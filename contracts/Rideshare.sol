@@ -11,10 +11,11 @@ contract Rideshare is Killable {
 
   struct Ride {
     address driver;
+    uint drivingCost;
     uint capacity;
     string originAddress;.
     string destAddress;
-    string state; // initial, acceptance, confirmed, enRoute, completion
+    string state; // initial, acceptance, passengerConfirmed, driverConfirmed, enRoute, completion
     uint createdAt;
     uint confirmedAt;
     mapping (address => Passenger) public passengers;
@@ -25,13 +26,15 @@ contract Rideshare is Killable {
   uint public rideCount;
   
   // for now, only drivers can create Rides
-  function createRide(uint _capacity, string _originAddress, string _destAddress, uint _confirmedAt) {
-    rides.push(Ride(msg.sender, _capacity, _originAddress, _destAddress, "initial", block.timestamp, _confirmedAt);
+  function createRide(uint _driverCost, uint _capacity, string _originAddress, string _destAddress, uint _confirmedAt) {
+    rides.push(Ride(msg.sender, _driverCost, _capacity, _originAddress, _destAddress, "initial", block.timestamp, _confirmedAt);
   }
   
   // called by passenger
   function joinRide(uint rideNumber) public payable {
     var passenger = rides[rideNumber].passengers[msg.sender];
+
+    require(msg.value == rides[rideNumber].drivingCost);
     
     passenger.price = msg.value;
     
@@ -64,12 +67,13 @@ contract Rideshare is Killable {
     }
   }
   
-  function confirmDriverArrived(uint rideNumber, string gpsLocation) {
-    require(rides[rideNumber].state == "confirmed");
+  function confirmDriverArrived(uint rideNumber) {
+    rides[rideNumber].passengers[msg.sender].state == "driverConfirmed";
+    // require(rides[rideNumber].state == "confirmed");
     
   }
   
-  function confirmPassengersArrived(uint rideNumber, uint[] passengerNumbers, string gpsLocation) {
+  function confirmPassengersArrived(uint rideNumber, uint[] passengerNumbers) {
     require(rides[rideNumber].state == "confirmed");
   }
   
