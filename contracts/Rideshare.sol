@@ -66,18 +66,30 @@ contract Rideshare is Killable {
     }
   }
   
-  function confirmDriverArrived(uint rideNumber) {
-    require(keccak256(rides[rideNumber].passengers[msg.sender].state) == keccak256("driverConfirmed"));
+  // called by passenger
+  function confirmDriverMet(uint rideNumber) {
+    require(passengerInRide(rideNumber, msg.sender));
+    Ride curRide = rides[rideNumber];
+    curRide.passengers[msg.sender].state = "driverConfirmed";
     // require(rides[rideNumber].state == "confirmed");
     
   }
   
-  function confirmPassengersArrived(uint rideNumber, uint[] passengerNumbers) {
+  // called by driver
+  function confirmPassengersMet(uint rideNumber, address[] passengerAddresses) {
+    Ride curRide = rides[rideNumber];
+    require(msg.sender == curRide.driver);
+    for(uint i=0; i < passengerAddresses.length; i++) {
+      curRide.passengers[passengerAddresses[i]].state = "passengersConfirmed";
+    }
+    
     // require(rides[rideNumber].state == "confirmed");
   }
   
+  // called by passenger
   function arrived(uint rideNumber) {
     require(passengerInRide(rideNumber, msg.sender));
-    
+    Ride curRide = rides[rideNumber];
+    curRide.driver.transfer(curRide.passengers[msg.sender].price);
   }
 }
