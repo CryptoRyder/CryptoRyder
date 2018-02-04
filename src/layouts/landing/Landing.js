@@ -10,8 +10,8 @@ class Landing extends Component {
       <main className="container">
         <div className="pure-g">
           <div className="pure-u-1-1">
-            <h1>Landing Page</h1>
-            <p>Landing page info</p>
+            <h1>Welcome to CryptoRyder!</h1>
+            <p>Find out how you can contribute to the decentralized transportation future!</p>
           </div>
         </div>
       </main>
