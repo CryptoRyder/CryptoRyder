@@ -5,7 +5,7 @@ import './zeppelin/lifecycle/Killable.sol';
 contract Rideshare is Killable {
   struct Passenger {
     uint price;
-    string state; // initial, acceptance, passengerConfirmed, driverConfirmed, enRoute, completion, canceled
+    string state; // initial, driverConfirmed, passengerConfirmed, enRoute, completion, canceled
   }
 
   struct Ride {
@@ -22,6 +22,8 @@ contract Rideshare is Killable {
   
   Ride[] public rides;
   uint public rideCount;
+
+  mapping (address => uint) reputation;
   
   // for now, only drivers can create Rides
   function createRide(uint _driverCost, uint _capacity, string _originAddress, string _destAddress, uint _confirmedAt) {
@@ -32,19 +34,39 @@ contract Rideshare is Killable {
   // called by passenger
   function joinRide(uint rideNumber) public payable {
     Ride curRide = rides[rideNumber];
-    var passenger = curRide.passengers[msg.sender];
+    require(msg.value == curRide.drivingCost);
 
-    require(msg.value == rides[rideNumber].drivingCost);
+    var passenger = curRide.passengers[msg.sender];    
     
     passenger.price = msg.value;
+    passenger.state = "initial";
     
     rides[rideNumber].passengerAccts.push(msg.sender) -1; //***
-    passenger.state = "initial";
-
   }
   
   function getPassengers(uint rideNumber) view public returns(address[]) {
     return rides[rideNumber].passengerAccts;
+  }
+
+  function getRide(uint rideNumber) public view returns (
+    address _driver,
+    uint _drivingCost,
+    uint _capacity,
+    string _originAddress,
+    string _destAddress,
+    uint _createdAt,
+    uint _confirmedAt
+  ) {
+    Ride ride = rides[rideNumber];
+    return (
+      ride.driver,
+      ride.drivingCost,
+      ride.capacity,
+      ride.originAddress,
+      ride.destAddress,
+      ride.createdAt,
+      ride.confirmedAt
+    )
   }
   
   function passengerInRide(uint rideNumber, address passengerAcct) returns (bool) {
@@ -73,9 +95,11 @@ contract Rideshare is Killable {
   function confirmDriverMet(uint rideNumber) {
     require(passengerInRide(rideNumber, msg.sender));
     Ride curRide = rides[rideNumber];
-    curRide.passengers[msg.sender].state = "driverConfirmed";
-    // require(rides[rideNumber].state == "confirmed");
-    
+    if (keccak256(curRide.passengers[msg.sender].state) == keccak256("passengersConfirmed")) {
+      curRide.passengers[msg.sender].state = "enRoute";
+    } else {
+      curRide.passengers[msg.sender].state = "driverConfirmed";
+    }
   }
   
   // called by driver
@@ -83,10 +107,24 @@ contract Rideshare is Killable {
     Ride curRide = rides[rideNumber];
     require(msg.sender == curRide.driver);
     for(uint i=0; i < passengerAddresses.length; i++) {
-      curRide.passengers[passengerAddresses[i]].state = "passengersConfirmed";
+      string curState = curRide.passengers[passengerAddresses[i]].state;
+      if (keccak256(curRide.passengers[passengerAddresses[i]].state) == keccak256("driverConfirmed")) {
+        curRide.passengers[passengerAddresses[i]].state = "enRoute";
+      } else {
+        curRide.passengers[passengerAddresses[i]].state = "passengersConfirmed";
+      }
     }
-    
     // require(rides[rideNumber].state == "confirmed");
+  }
+
+  function enRouteList(uint rideNumber) view public returns(address[]) {
+    Ride curRide = rides[rideNumber];
+    address[] addressesEnRoute;
+    for(uint i = 0; i < curRide.passengerAccts.length; i++) {
+      if (keccak256(curRide.passengers[curRide.passengerAccts[i]].state) == keccak256("enRoute")) {
+        addressesEnRoute.push(curRide.passengerAccts[i]);
+      }
+    }
   }
   
   // called by passenger
