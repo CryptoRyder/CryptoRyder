@@ -71,7 +71,7 @@ contract Rideshare is Killable {
       ride.originAddress,
       ride.destAddress,
       ride.createdAt,
-      ride.confirmedAt
+      ride.confirmedAt,
       ride.departAt
     );
   }

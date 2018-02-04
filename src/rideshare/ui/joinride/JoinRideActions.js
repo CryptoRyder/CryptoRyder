@@ -1,7 +1,7 @@
-import RideshareContract from '../../../build/contracts/Rideshare.json'
+import RideshareContract from '../../../../build/contracts/Rideshare.json'
 // import { loginUser } from '../loginbutton/LoginButtonActions'
 import { browserHistory } from 'react-router'
-import store from '../../store'
+import store from '../../../store'
 
 const contract = require('truffle-contract')
 
@@ -33,6 +33,8 @@ export function joinRide(ride_number, payment) {
           // console.log(shipping_cost);
           // console.log(shipping_cost * 10^18);
           // console.log(parseInt(shipping_cost * Math.pow(10,18)))
+
+          console.log(payment);
 
           // Attempt to sign up user.
           rideshareInstance.joinRide(ride_number, {value: parseInt(payment * Math.pow(10,18)), from: coinbase})

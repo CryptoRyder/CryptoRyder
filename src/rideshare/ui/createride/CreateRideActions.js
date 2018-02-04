@@ -1,7 +1,7 @@
-import RideshareContract from '../../../build/contracts/Rideshare.json'
+import RideshareContract from '../../../../build/contracts/Rideshare.json'
 // import { loginUser } from '../loginbutton/LoginButtonActions'
 import { browserHistory } from 'react-router'
-import store from '../../store'
+import store from '../../../store'
 
 const contract = require('truffle-contract')
 
@@ -33,9 +33,11 @@ export function createRide(expected_payment, capacity, origin_address, destinati
           // console.log(shipping_cost);
           // console.log(shipping_cost * 10^18);
           // console.log(parseInt(shipping_cost * Math.pow(10,18)))
+          console.log(expected_payment);
+          console.log(parseInt(expected_payment * Math.pow(10,18)));
 
           // Attempt to sign up user.
-          rideshareInstance.createRide(expected_payment, capacity, origin_address, destination_address, confirmed_at, depart_at, {from: coinbase})
+          rideshareInstance.createRide(parseInt(expected_payment * Math.pow(10,18)), capacity, origin_address, destination_address, confirmed_at, depart_at, {from: coinbase})
           .then(function(result) {
             // If no error, login user.
             return browserHistory.push('/dashboard')
