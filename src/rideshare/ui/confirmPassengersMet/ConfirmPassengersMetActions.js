@@ -29,13 +29,17 @@ export function confirmPassengersMet(ride_number, passengers, gps_location) {
         rideshare.deployed().then(function(instance) {
           rideshareInstance = instance
 
+          let new_passengers = passengers.split(",");
+
+          console.log(new_passengers);
+
           // console.log('shipping cost');
           // console.log(shipping_cost);
           // console.log(shipping_cost * 10^18);
           // console.log(parseInt(shipping_cost * Math.pow(10,18)))
 
           // Attempt to sign up user.
-          rideshareInstance.confirmPassengersMet(ride_number, [ passengers ], {from: coinbase})
+          rideshareInstance.confirmPassengersMet(ride_number, new_passengers, {from: coinbase})
           .then(function(result) {
             // If no error, login user.
             return browserHistory.push('/dashboard')

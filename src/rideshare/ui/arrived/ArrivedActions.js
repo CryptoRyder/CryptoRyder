@@ -5,7 +5,7 @@ import store from '../../../store'
 
 const contract = require('truffle-contract')
 
-export function confirmDriverMet(ride_number, gps_location) {
+export function arrived(ride_number) {
   let web3 = store.getState().web3.web3Instance
 
   // Double-check web3's status.
@@ -34,10 +34,9 @@ export function confirmDriverMet(ride_number, gps_location) {
           // console.log(shipping_cost * 10^18);
           // console.log(parseInt(shipping_cost * Math.pow(10,18)))
 
-          console.log('details from confirm driver met');
 
           // Attempt to sign up user.
-          rideshareInstance.confirmDriverMet(ride_number, {from: coinbase})
+          rideshareInstance.arrived(ride_number, {from: coinbase})
           .then(function(result) {
             // If no error, login user.
             return browserHistory.push('/dashboard')
