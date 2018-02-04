@@ -10,6 +10,8 @@ import getWeb3 from './util/web3/getWeb3'
 import App from './App'
 import Home from './layouts/home/Home'
 import Dashboard from './layouts/dashboard/Dashboard'
+import Landing from './layouts/landing/Landing'
+import Payment from './layouts/payment/Payment'
 import SignUp from './user/layouts/signup/SignUp'
 import Profile from './user/layouts/profile/Profile'
 
@@ -32,10 +34,12 @@ ReactDOM.render((
     <Provider store={store}>
       <Router history={history}>
         <Route path="/" component={App}>
-          <IndexRoute component={Home} />
+          <IndexRoute component={Landing} />
           <Route path="dashboard" component={UserIsAuthenticated(Dashboard)} />
           <Route path="signup" component={UserIsNotAuthenticated(SignUp)} />
           <Route path="profile" component={UserIsAuthenticated(Profile)} />
+          <Route path="home" component={UserIsAuthenticated(Home)} />
+          <Route path="payment" component={UserIsAuthenticated(Payment)} />
         </Route>
       </Router>
     </Provider>
