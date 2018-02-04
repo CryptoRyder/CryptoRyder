@@ -1,8 +1,8 @@
 # CryptoRyder
 A decentralized inter-city ridesharing platform built on the Ethereum blockchain.
 
-![Demo1](https://github.com/CryptoRyder/CryptoRyder/demo1.png "Home Page")
-![Demo2](https://github.com/CryptoRyder/CryptoRyder/demo2.png "Search Results")
+![Demo1](https://github.com/CryptoRyder/CryptoRyder/blob/master/demo1.PNG "Home Page")
+![Demo2](https://github.com/CryptoRyder/CryptoRyder/blob/master/demo2.PNG "Search Results")
 ## Inspiration
 In the North America of 2018, there are hundreds of thousands of vehicles driving from one city to another, commuting in from the suburbs into the metropolis on a daily basis. Yet research shows that approximately 85% of those vehicles contain only the driver themselves. That’s a lot of empty seats, and when we think about it, a lot of unnecessary extra traffic. Long, solo road trips are not only costly undertakings; they also contribute to carbon emissions. Ultimately, our philosophy to creating the transportation network that fits the needs of tomorrow is to maximize pre-existing infrastructure and resources, enabling people with private cars to share their journey with others traveling in the same direction while receiving money to offset the cost of an already-planned trip. And we will attempt to do all this in a truly decentralized fashion with the help of the Ethereum blockchain.
 
