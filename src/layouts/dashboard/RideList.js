@@ -7,16 +7,19 @@ const contract = require('truffle-contract')
 class RideList extends Component {
   constructor(props) {
     super(props)
+    this.state = {
+      rideshares: []
+    };
   }
 
   getRides() {
     let web3 = store.getState().web3.web3Instance
 
-    const shipping = contract(ShippingContract)
-    shipping.setProvider(web3.currentProvider)
+    const rideshare = contract(RideshareContract)
+    rideshare.setProvider(web3.currentProvider)
 
     // Declaring this for later so we can chain functions on Authentication.
-    var shippingInstance
+    var rideshareInstance
 
     var _this = this;
 
@@ -27,24 +30,24 @@ class RideList extends Component {
         console.error(error);
       }
 
-      shipping.deployed().then(function(instance) {
-        shippingInstance = instance
+      rideshare.deployed().then(function(instance) {
+        rideshareInstance = instance
 
-        shippingInstance.getShipmentCount.call()
+        rideshareInstance.getRideCount.call()
         .then(function(result) {
           console.log('get shipment count')
           console.log(result)
-          let shippingCount = result["c"][0];
+          let rideshareCount = result["c"][0];
 
-          for (let i = 0; i < shippingCount; i++) {
-            shippingInstance.getShipment.call(i)
+          for (let i = 0; i < rideshareCount; i++) {
+            rideshareInstance.getRide.call(i)
             .then(function(result) {
               // If no error, login user.
-              console.log('getshipmentcount')
+              console.log('getridesharecount')
               console.log(result)
-              var tempArr = _this.state.shipments;
-              let tempShipments = tempArr.concat([result]);
-              _this.setState({shipments: tempShipments})
+              var tempArr = _this.state.rideshares;
+              let tempRideshares = tempArr.concat([result]);
+              _this.setState({rideshares: tempRideshares})
               console.log('test2');
               // debugger
               // return result;
@@ -67,6 +70,9 @@ class RideList extends Component {
           <div className="pure-u-1-1">
             <h1>Dashboard</h1>
             <p><strong>Congratulations </strong> If you're seeing this page, you've logged in with your own smart contract successfully.</p>
+            {this.state.rideshares.map((el, i) => {
+              
+            })}
           </div>
         </div>
       </main>
