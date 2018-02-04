@@ -53,7 +53,7 @@ export function loginUser() {
               return browserHistory.push(decodeURIComponent(currentLocation.query.redirect))
             }
 
-            return browserHistory.push('/home')
+            return browserHistory.push('/dashboard')
           })
           .catch(function(result) {
             // If error, go to signup page.
