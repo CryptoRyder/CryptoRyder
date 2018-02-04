@@ -48,6 +48,10 @@ contract Rideshare is Killable {
     return rides[rideNumber].passengerAccts;
   }
 
+  function getPassengerRideState(uint rideNumber, address passenger) view public returns(string) {
+    return rides[rideNumber].passengers[passenger].state;
+  }
+
   function getRide(uint rideNumber) public view returns (
     address _driver,
     uint _drivingCost,
@@ -66,7 +70,11 @@ contract Rideshare is Killable {
       ride.destAddress,
       ride.createdAt,
       ride.confirmedAt
-    )
+    );
+  }
+
+  function getRideCount() public constant returns(uint) {
+    return rides.length;
   }
   
   function passengerInRide(uint rideNumber, address passengerAcct) returns (bool) {

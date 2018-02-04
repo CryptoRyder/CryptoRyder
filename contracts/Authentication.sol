@@ -7,7 +7,7 @@ contract Authentication is Killable {
     bytes32 name;
   }
 
-  mapping (address => User) private users;
+  mapping (address => User) public users;
 
   uint private id; // Stores user id temporarily
 
