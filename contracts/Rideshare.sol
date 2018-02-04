@@ -5,7 +5,7 @@ import './zeppelin/lifecycle/Killable.sol';
 contract Rideshare is Killable {
   struct Passenger {
     uint price;
-    string state; // initial, acceptance, passengerConfirmed, driverConfirmed, enRoute, completion
+    string state; // initial, acceptance, passengerConfirmed, driverConfirmed, enRoute, completion, canceled
   }
 
   struct Ride {
@@ -31,13 +31,16 @@ contract Rideshare is Killable {
   
   // called by passenger
   function joinRide(uint rideNumber) public payable {
-    var passenger = rides[rideNumber].passengers[msg.sender];
+    Ride curRide = rides[rideNumber];
+    var passenger = curRide.passengers[msg.sender];
 
     require(msg.value == rides[rideNumber].drivingCost);
     
     passenger.price = msg.value;
     
     rides[rideNumber].passengerAccts.push(msg.sender) -1; //***
+    passenger.state = "initial";
+
   }
   
   function getPassengers(uint rideNumber) view public returns(address[]) {
