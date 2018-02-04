@@ -16,6 +16,7 @@ contract Rideshare is Killable {
     string destAddress;
     uint createdAt;
     uint confirmedAt;
+    uint departAt;
     mapping (address => Passenger) passengers;
     address[] passengerAccts;
   }
@@ -26,9 +27,9 @@ contract Rideshare is Killable {
   mapping (address => uint) reputation;
   
   // for now, only drivers can create Rides
-  function createRide(uint _driverCost, uint _capacity, string _originAddress, string _destAddress, uint _confirmedAt) {
+  function createRide(uint _driverCost, uint _capacity, string _originAddress, string _destAddress, uint _confirmedAt, uint _departAt) {
     address[] memory _passengerAccts;
-    rides.push(Ride(msg.sender, _driverCost, _capacity, _originAddress, _destAddress, block.timestamp, _confirmedAt, _passengerAccts));
+    rides.push(Ride(msg.sender, _driverCost, _capacity, _originAddress, _destAddress, block.timestamp, _confirmedAt, _departAt, _passengerAccts));
   }
   
   // called by passenger
@@ -59,7 +60,8 @@ contract Rideshare is Killable {
     string _originAddress,
     string _destAddress,
     uint _createdAt,
-    uint _confirmedAt
+    uint _confirmedAt,
+    uint _departAt
   ) {
     Ride ride = rides[rideNumber];
     return (
@@ -70,6 +72,7 @@ contract Rideshare is Killable {
       ride.destAddress,
       ride.createdAt,
       ride.confirmedAt
+      ride.departAt
     );
   }
 
