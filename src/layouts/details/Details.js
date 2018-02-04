@@ -1,13 +1,21 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
+import RideDetails from './RideDetails'
 
-class Home extends Component {
+class Details extends Component {
+  constructor(props) {
+    super(props)
+  }
+
   render() {
+    console.log(this.props);
     return(
       <main className="container">
         <div className="pure-g">
           <div className="pure-u-1-1">
             <h1>Good to Go!</h1>
+            <p>ID is {this.props.params.id}</p>
+            <RideDetails rideId={this.props.params.id}/>
             <p><Link to={`/dashboard`}>Dashboard</Link></p>
             <p>Your Truffle Box is installed and ready.</p>
             <h2>Smart Contract Authentication</h2>
@@ -26,4 +34,4 @@ class Home extends Component {
   }
 }
 
-export default Home
+export default Details

@@ -143,5 +143,6 @@ contract Rideshare is Killable {
     require(passengerInRide(rideNumber, msg.sender));
     Ride curRide = rides[rideNumber];
     curRide.driver.transfer(curRide.passengers[msg.sender].price);
+    curRide.passengers[msg.sender].state = "completion"
   }
 }

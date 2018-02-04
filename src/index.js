@@ -43,8 +43,8 @@ ReactDOM.render((
           <Route path="home" component={UserIsAuthenticated(Home)} />
           <Route path="payment" component={UserIsAuthenticated(Payment)} />
           <Route path="driver" component={UserIsAuthenticated(Driver)} />
+          <Route path="/details/:id" component={UserIsAuthenticated(Details)}/>
         </Route>
-        <Route path="/details/:id" component={UserIsAuthenticated(Details)}/>
       </Router>
     </Provider>
   ),
