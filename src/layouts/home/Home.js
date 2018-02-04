@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 
 class Home extends Component {
   render() {
@@ -7,6 +8,7 @@ class Home extends Component {
         <div className="pure-g">
           <div className="pure-u-1-1">
             <h1>Good to Go!</h1>
+            <p><Link to={`/dashboard`}>Dashboard</Link></p>
             <p>Your Truffle Box is installed and ready.</p>
             <h2>Smart Contract Authentication</h2>
             <p>This particular box comes with autentication via a smart contract built-in.</p>
