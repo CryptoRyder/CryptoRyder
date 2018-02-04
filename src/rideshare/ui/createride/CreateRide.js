@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class CreateRideshare extends Component {
+class CreateRide extends Component {
   constructor(props) {
     super(props)
 
@@ -41,7 +41,7 @@ class CreateRideshare extends Component {
   handleSubmit(event) {
     event.preventDefault()
 
-    this.props.onCreateRideshareFormSubmit(this.state.expected_payment, this.state.capacity, this.state.origin_address, this.state.destination_address, this.state.confirmed_at, this.state.depart_at)
+    this.props.onCreateRideFormSubmit(this.state.expected_payment, this.state.capacity, this.state.origin_address, this.state.destination_address, this.state.confirmed_at, this.state.depart_at)
   }
 
   render() {
@@ -68,11 +68,11 @@ class CreateRideshare extends Component {
 
           <br />
 
-          <button type="submit" className="pure-button pure-button-primary">Create Shipment</button>
+          <button type="submit" className="pure-button pure-button-primary">Create Rideshare</button>
         </fieldset>
       </form>
     )
   }
 }
 
-export default CreateRideshare
+export default CreateRide
