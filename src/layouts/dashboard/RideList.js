@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import RideshareContract from '../../../build/contracts/Rideshare.json'
 import store from '../../store'
+import JoinRideContainer from '../../rideshare/ui/joinride/JoinRideContainer'
 
 const contract = require('truffle-contract')
 
@@ -40,7 +41,7 @@ class RideList extends Component {
 
         rideshareInstance.getRideCount.call()
         .then(function(result) {
-          console.log('get shipment count')
+          console.log('get rideshare count')
           console.log(result)
           let rideshareCount = result["c"][0];
 
@@ -54,6 +55,7 @@ class RideList extends Component {
               let tempRideshares = tempArr.concat([result]);
               _this.setState({rideshares: tempRideshares})
               console.log('test2');
+              console.log(this.state.rideshares);
               // debugger
               // return result;
               // return dispatch(loginUser())
@@ -69,22 +71,19 @@ class RideList extends Component {
   }
 
   render() {
+    let web3 = store.getState().web3.web3Instance
+
     return(
       <main className="container">
         <div className="pure-g">
           <div className="pure-u-1-1">
-            <h1>Dashboard</h1>
-            <p><strong>Congratulations </strong> If you're seeing this page, you've logged in with your own smart contract successfully.</p>
             {this.state.rideshares.map((ride, i) => {
+              console.log(ride);
               return (
-                ride[0];
-                ride[1];
-                ride[2];
-                ride[3];
-                ride[4];
-                ride[5];
-                ride[6];
-                ride[7];
+                <p>{ride[0]}, {web3.fromWei(ride[1], "ether" ).toNumber()}, {ride[2]["c"][0]}, {ride[3]}, {ride[4]}, 
+                <JoinRideContainer ride_number={i} payment={web3.fromWei(ride[1], "ether" ).toNumber()}/>
+                <Link to={`/details/${i}`}>Dashboard</Link>
+                </p>
               )
             })}
           </div>

@@ -12,6 +12,8 @@ import Home from './layouts/home/Home'
 import Dashboard from './layouts/dashboard/Dashboard'
 import Landing from './layouts/landing/Landing'
 import Payment from './layouts/payment/Payment'
+import Driver from './layouts/driver/Driver'
+import Details from './layouts/details/Details'
 import SignUp from './user/layouts/signup/SignUp'
 import Profile from './user/layouts/profile/Profile'
 
@@ -40,7 +42,9 @@ ReactDOM.render((
           <Route path="profile" component={UserIsAuthenticated(Profile)} />
           <Route path="home" component={UserIsAuthenticated(Home)} />
           <Route path="payment" component={UserIsAuthenticated(Payment)} />
+          <Route path="driver" component={UserIsAuthenticated(Driver)} />
         </Route>
+        <Route path="/details/:id" component={UserIsAuthenticated(Details)}/>
       </Router>
     </Provider>
   ),

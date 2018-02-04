@@ -1,7 +1,7 @@
-import RideshareContract from '../../../build/contracts/Rideshare.json'
+import RideshareContract from '../../../../build/contracts/Rideshare.json'
 // import { loginUser } from '../loginbutton/LoginButtonActions'
 import { browserHistory } from 'react-router'
-import store from '../../store'
+import store from '../../../store'
 
 const contract = require('truffle-contract')
 
