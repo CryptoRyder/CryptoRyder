@@ -10,6 +10,11 @@ class RideList extends Component {
     this.state = {
       rideshares: []
     };
+    this.getRides = this.getRides.bind(this);
+  }
+
+  componentDidMount() {
+    this.getRides();
   }
 
   getRides() {
@@ -70,8 +75,17 @@ class RideList extends Component {
           <div className="pure-u-1-1">
             <h1>Dashboard</h1>
             <p><strong>Congratulations </strong> If you're seeing this page, you've logged in with your own smart contract successfully.</p>
-            {this.state.rideshares.map((el, i) => {
-              
+            {this.state.rideshares.map((ride, i) => {
+              return (
+                ride[0];
+                ride[1];
+                ride[2];
+                ride[3];
+                ride[4];
+                ride[5];
+                ride[6];
+                ride[7];
+              )
             })}
           </div>
         </div>
